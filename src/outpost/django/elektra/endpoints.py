@@ -1,0 +1,44 @@
+from . import api
+
+v1 = [
+    (
+        r"elektra/projectreport",
+        api.ProjectReportViewSet,
+        "elektra-projectreport",
+    ),
+    (
+        r"elektra/projectreporttask",
+        api.ProjectReportTaskViewSet,
+        "elektra-projectreporttask",
+    ),
+    (
+        r"elektra/projectcalculationtask",
+        api.ProjectCalculationTaskViewSet,
+        "elektra-projectcalculationtask",
+    ),
+    (
+        r"elektra/contractreviewtask",
+        api.ContractReviewTaskViewSet,
+        "elektra-contractreviewtask",
+    ),
+    (
+        r"elektra/sponsorclearancetask",
+        api.SponsorClearanceTaskViewSet,
+        "elektra-sponsorclearancetask",
+    ),
+    (
+        r"elektra/administrationconfirmationtask",
+        api.AdministrationConfirmationTaskViewSet,
+        "elektra-administrationconfirmationtask",
+    ),
+    (
+        r"elektra/rectoratecommitment",
+        api.RectorateCommitmentTaskViewSet,
+        "elektra-rectoratecommitment",
+    ),
+    (
+        r"elektra/medicalboardclearancetask",
+        api.MedicalBoardClearanceTaskViewSet,
+        "elektra-medicalboardclearancetask",
+    ),
+]
