@@ -2,6 +2,8 @@
 
 from django.db import migrations
 
+from ..conf import settings
+
 
 class Migration(migrations.Migration):
 
@@ -105,7 +107,7 @@ class Migration(migrations.Migration):
                 "OVERHEADSATZ" float8 NULL
             )
             SERVER doxis
-            OPTIONS (schema_name 'doxis-dev', table_name 'ELEKTR.A_Projektmeldung');
+            OPTIONS (schema_name '{schema}', table_name 'ELEKTR.A_Projektmeldung');
 
             CREATE FOREIGN TABLE elektra.projektmeldungaufgaben (
                 "UUID" varchar,
@@ -124,7 +126,7 @@ class Migration(migrations.Migration):
                 "WFL_DECISION_CODE" varchar(256) NULL
             )
             SERVER doxis
-            OPTIONS (schema_name 'doxis-dev', table_name 'ELEKTR.A_Projektmeldung_Aufgaben');
+            OPTIONS (schema_name '{schema}', table_name 'ELEKTR.A_Projektmeldung_Aufgaben');
 
             CREATE FOREIGN TABLE elektra.bestleist_aufgaben (
                 "UUID" varchar,
@@ -144,7 +146,7 @@ class Migration(migrations.Migration):
                 "DOKFOLDERUUID" varchar(100) NULL
             )
             SERVER doxis
-            OPTIONS (schema_name 'doxis-dev', table_name 'ELEKTR.A_BestLeist_Aufgaben');
+            OPTIONS (schema_name '{schema}', table_name 'ELEKTR.A_BestLeist_Aufgaben');
 
             CREATE FOREIGN TABLE elektra.commitmentrekt_aufgaben (
                 "UUID" varchar,
@@ -164,7 +166,7 @@ class Migration(migrations.Migration):
                 "DOKFOLDERUUID" varchar(100) NULL
             )
             SERVER doxis
-            OPTIONS (schema_name 'doxis-dev', table_name 'ELEKTR.A_CommitmentRekt_Aufgaben');
+            OPTIONS (schema_name '{schema}', table_name 'ELEKTR.A_CommitmentRekt_Aufgaben');
 
             CREATE FOREIGN TABLE elektra.freigabeaedir_aufgaben (
                 "UUID" varchar,
@@ -184,7 +186,7 @@ class Migration(migrations.Migration):
                 "DOKFOLDERUUID" varchar(100) NULL
             )
             SERVER doxis
-            OPTIONS (schema_name 'doxis-dev', table_name 'ELEKTR.A_FreigabeAEDir_Aufgaben');
+            OPTIONS (schema_name '{schema}', table_name 'ELEKTR.A_FreigabeAEDir_Aufgaben');
 
             CREATE FOREIGN TABLE elektra.freigabesponsor_aufgaben (
                 "UUID" varchar,
@@ -204,7 +206,7 @@ class Migration(migrations.Migration):
                 "DOKFOLDERUUID" varchar(100) NULL
             )
             SERVER doxis
-            OPTIONS (schema_name 'doxis-dev', table_name 'ELEKTR.A_FreigabeSponsor_Aufgaben');
+            OPTIONS (schema_name '{schema}', table_name 'ELEKTR.A_FreigabeSponsor_Aufgaben');
 
             CREATE FOREIGN TABLE elektra.projkalk_aufgaben (
                 "UUID" varchar,
@@ -224,7 +226,7 @@ class Migration(migrations.Migration):
                 "DOKFOLDERUUID" varchar(100) NULL
             )
             SERVER doxis
-            OPTIONS (schema_name 'doxis-dev', table_name 'ELEKTR.A_ProjKalk_Aufgaben');
+            OPTIONS (schema_name '{schema}', table_name 'ELEKTR.A_ProjKalk_Aufgaben');
 
             CREATE FOREIGN TABLE elektra.vertrpruef_aufgaben (
                 "UUID" varchar,
@@ -244,7 +246,7 @@ class Migration(migrations.Migration):
                 "DOKFOLDERUUID" varchar(100) NULL
             )
             SERVER doxis
-            OPTIONS (schema_name 'doxis-dev', table_name 'ELEKTR.A_VertrPruef_Aufgaben');
+            OPTIONS (schema_name '{schema}', table_name 'ELEKTR.A_VertrPruef_Aufgaben');
 
             CREATE MATERIALIZED VIEW public.elektra_project_report AS SELECT
                 "PROJEKTNUMMER" AS id,
@@ -421,7 +423,9 @@ class Migration(migrations.Migration):
                 "WFL_DECISION_CODE" AS workflow_decision_code
             FROM elektra.freigabeaedir_aufgaben
             WITH DATA;
-            """,
+            """.format(
+                schema=settings.ELEKTRA_SCHEMA
+            ),
             """
             DROP MATERIALIZED VIEW IF EXISTS public.elektra_medica_board_clearance;
 
