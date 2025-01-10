@@ -292,7 +292,7 @@ class Migration(migrations.Migration):
             WITH DATA;
 
             CREATE MATERIALIZED VIEW public.elektra_project_report_task AS SELECT
-                concat_ws('-', "PROJEKTNUMMER", "VERSION") AS id,
+                concat_ws('-', "UUID", "VERSION") AS id,
                 "UUID" AS uuid,
                 "PROJEKTNUMMER"::integer AS project_report_id,
                 "PROJEKTADMINISTRATIONID_APIID"::integer AS administration_id,
@@ -311,7 +311,7 @@ class Migration(migrations.Migration):
             WITH DATA;
 
             CREATE MATERIALIZED VIEW public.elektra_project_calculation_task AS SELECT
-                concat_ws('-', "PROJEKTNUMMER", "VERSION") AS id,
+                concat_ws('-', "UUID", "VERSION") AS id,
                 "UUID" AS uuid,
                 "PROJEKTNUMMER"::integer AS project_report_id,
                 "PROJEKTADMINISTRATIONID_APIID"::integer AS administration_id,
@@ -330,7 +330,7 @@ class Migration(migrations.Migration):
             WITH DATA;
 
             CREATE MATERIALIZED VIEW public.elektra_contract_review_task AS SELECT
-                concat_ws('-', "PROJEKTNUMMER", "VERSION") AS id,
+                concat_ws('-', "UUID", "VERSION") AS id,
                 "UUID" AS uuid,
                 "PROJEKTNUMMER"::integer AS project_report_id,
                 "PROJEKTADMINISTRATIONID_APIID"::integer AS administration_id,
@@ -349,7 +349,7 @@ class Migration(migrations.Migration):
             WITH DATA;
 
             CREATE MATERIALIZED VIEW public.elektra_sponsor_clearance_task AS SELECT
-                concat_ws('-', "PROJEKTNUMMER", "VERSION") AS id,
+                concat_ws('-', "UUID", "VERSION") AS id,
                 "UUID" AS uuid,
                 "PROJEKTNUMMER"::integer AS project_report_id,
                 "PROJEKTADMINISTRATIONID_APIID"::integer AS administration_id,
@@ -368,7 +368,7 @@ class Migration(migrations.Migration):
             WITH DATA;
 
             CREATE MATERIALIZED VIEW public.elektra_administration_confirmation AS SELECT
-                concat_ws('-', "PROJEKTNUMMER", "VERSION") AS id,
+                concat_ws('-', "UUID", "VERSION") AS id,
                 "UUID" AS uuid,
                 "PROJEKTNUMMER"::integer AS project_report_id,
                 "PROJEKTADMINISTRATIONID_APIID"::integer AS administration_id,
@@ -387,7 +387,7 @@ class Migration(migrations.Migration):
             WITH DATA;
 
             CREATE MATERIALIZED VIEW public.elektra_rectorate_commitment AS SELECT
-                concat_ws('-', "PROJEKTNUMMER", "VERSION") AS id,
+                concat_ws('-', "UUID", "VERSION") AS id,
                 "UUID" AS uuid,
                 "PROJEKTNUMMER"::integer AS project_report_id,
                 "PROJEKTADMINISTRATIONID_APIID"::integer AS administration_id,
@@ -406,7 +406,7 @@ class Migration(migrations.Migration):
             WITH DATA;
 
             CREATE MATERIALIZED VIEW public.elektra_medica_board_clearance AS SELECT
-                concat_ws('-', "PROJEKTNUMMER", "VERSION") AS id,
+                concat_ws('-', "UUID", "VERSION") AS id,
                 "UUID" AS uuid,
                 "PROJEKTNUMMER"::integer AS project_report_id,
                 "PROJEKTADMINISTRATIONID_APIID"::integer AS administration_id,
