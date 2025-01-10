@@ -249,7 +249,7 @@ class Migration(migrations.Migration):
             OPTIONS (schema_name '{schema}', table_name 'ELEKTR.A_VertrPruef_Aufgaben');
 
             CREATE MATERIALIZED VIEW public.elektra_project_report AS SELECT
-                "PROJEKTNUMMER" AS id,
+                "PROJEKTNUMMER"::integer AS id,
                 "UUID" AS uuid,
                 "KURZBEZEICHNUNG" AS short,
                 "PROJEKTADMINISTRATIONID_APIID"::integer AS administration_id,
@@ -294,7 +294,7 @@ class Migration(migrations.Migration):
             CREATE MATERIALIZED VIEW public.elektra_project_report_task AS SELECT
                 concat_ws('-', "PROJEKTNUMMER", "VERSION") AS id,
                 "UUID" AS uuid,
-                "PROJEKTNUMMER" AS project_report_id,
+                "PROJEKTNUMMER"::integer AS project_report_id,
                 "PROJEKTADMINISTRATIONID_APIID"::integer AS administration_id,
                 "VERSION" AS version,
                 to_timestamp("CREATION_DATE"::text,'YYYYMMDDHH24MISSMS') AS created,
@@ -313,7 +313,7 @@ class Migration(migrations.Migration):
             CREATE MATERIALIZED VIEW public.elektra_project_calculation_task AS SELECT
                 concat_ws('-', "PROJEKTNUMMER", "VERSION") AS id,
                 "UUID" AS uuid,
-                "PROJEKTNUMMER" AS project_report_id,
+                "PROJEKTNUMMER"::integer AS project_report_id,
                 "PROJEKTADMINISTRATIONID_APIID"::integer AS administration_id,
                 "VERSION" AS version,
                 to_timestamp("CREATION_DATE"::text,'YYYYMMDDHH24MISSMS') AS created,
@@ -332,7 +332,7 @@ class Migration(migrations.Migration):
             CREATE MATERIALIZED VIEW public.elektra_contract_review_task AS SELECT
                 concat_ws('-', "PROJEKTNUMMER", "VERSION") AS id,
                 "UUID" AS uuid,
-                "PROJEKTNUMMER" AS project_report_id,
+                "PROJEKTNUMMER"::integer AS project_report_id,
                 "PROJEKTADMINISTRATIONID_APIID"::integer AS administration_id,
                 "VERSION" AS version,
                 to_timestamp("CREATION_DATE"::text,'YYYYMMDDHH24MISSMS') AS created,
@@ -351,7 +351,7 @@ class Migration(migrations.Migration):
             CREATE MATERIALIZED VIEW public.elektra_sponsor_clearance_task AS SELECT
                 concat_ws('-', "PROJEKTNUMMER", "VERSION") AS id,
                 "UUID" AS uuid,
-                "PROJEKTNUMMER" AS project_report_id,
+                "PROJEKTNUMMER"::integer AS project_report_id,
                 "PROJEKTADMINISTRATIONID_APIID"::integer AS administration_id,
                 "VERSION" AS version,
                 to_timestamp("CREATION_DATE"::text,'YYYYMMDDHH24MISSMS') AS created,
@@ -370,7 +370,7 @@ class Migration(migrations.Migration):
             CREATE MATERIALIZED VIEW public.elektra_administration_confirmation AS SELECT
                 concat_ws('-', "PROJEKTNUMMER", "VERSION") AS id,
                 "UUID" AS uuid,
-                "PROJEKTNUMMER" AS project_report_id,
+                "PROJEKTNUMMER"::integer AS project_report_id,
                 "PROJEKTADMINISTRATIONID_APIID"::integer AS administration_id,
                 "VERSION" AS version,
                 to_timestamp("CREATION_DATE"::text,'YYYYMMDDHH24MISSMS') AS created,
@@ -389,7 +389,7 @@ class Migration(migrations.Migration):
             CREATE MATERIALIZED VIEW public.elektra_rectorate_commitment AS SELECT
                 concat_ws('-', "PROJEKTNUMMER", "VERSION") AS id,
                 "UUID" AS uuid,
-                "PROJEKTNUMMER" AS project_report_id,
+                "PROJEKTNUMMER"::integer AS project_report_id,
                 "PROJEKTADMINISTRATIONID_APIID"::integer AS administration_id,
                 "VERSION" AS version,
                 to_timestamp("CREATION_DATE"::text,'YYYYMMDDHH24MISSMS') AS created,
@@ -408,7 +408,7 @@ class Migration(migrations.Migration):
             CREATE MATERIALIZED VIEW public.elektra_medica_board_clearance AS SELECT
                 concat_ws('-', "PROJEKTNUMMER", "VERSION") AS id,
                 "UUID" AS uuid,
-                "PROJEKTNUMMER" AS project_report_id,
+                "PROJEKTNUMMER"::integer AS project_report_id,
                 "PROJEKTADMINISTRATIONID_APIID"::integer AS administration_id,
                 "VERSION" AS version,
                 to_timestamp("CREATION_DATE"::text,'YYYYMMDDHH24MISSMS') AS created,
