@@ -10,6 +10,10 @@ class Migration(migrations.Migration):
     ops = [
         (
             """
+            CREATE SERVER doxis FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host '{hostname}', dbname '{database}', port '{port}');
+
+            CREATE USER MAPPING FOR CURRENT_USER SERVER doxis OPTIONS (user '{username}', password '{password}');
+
             CREATE SCHEMA elektra;
 
             CREATE FOREIGN TABLE elektra.projektmeldung (
@@ -424,7 +428,12 @@ class Migration(migrations.Migration):
             FROM elektra.freigabeaedir_aufgaben
             WITH DATA;
             """.format(
-                schema=settings.ELEKTRA_SCHEMA
+                schema=settings.ELEKTRA_SCHEMA,
+                hostname=settings.ELEKTRA_FDW_HOSTNAME,
+                database=settings.ELEKTRA_FDW_DATABASE,
+                port=settings.ELEKTRA_FDW_PORT or 5432,
+                username=settings.ELEKTRA_FDW_USERNAME,
+                password=settings.ELEKTRA_FDW_PASSWORD
             ),
             """
             DROP MATERIALIZED VIEW IF EXISTS public.elektra_medical_board_clearance;
@@ -460,6 +469,10 @@ class Migration(migrations.Migration):
             DROP FOREIGN TABLE elektra.projektmeldung;
 
             DROP SCHEMA elektra;
+
+            DROP USER MAPPING IF EXISTS FOR CURRENT_USER SERVER doxis;
+
+            DROP SERVER IF EXISTS doxis;
             """,
         )
     ]
