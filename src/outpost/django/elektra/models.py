@@ -642,7 +642,7 @@ class MedicalBoardClearanceTask(models.Model):
 
     class Meta:
         managed = False
-        db_table = "elektra_medica_board_clearance"
+        db_table = "elektra_medical_board_clearance"
 
     class Refresh:
         interval = 86400

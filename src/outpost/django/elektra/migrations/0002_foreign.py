@@ -405,7 +405,7 @@ class Migration(migrations.Migration):
             FROM elektra.commitmentrekt_aufgaben
             WITH DATA;
 
-            CREATE MATERIALIZED VIEW public.elektra_medica_board_clearance AS SELECT
+            CREATE MATERIALIZED VIEW public.elektra_medical_board_clearance AS SELECT
                 concat_ws('-', "UUID", "VERSION") AS id,
                 "UUID" AS uuid,
                 "PROJEKTNUMMER"::integer AS project_report_id,
@@ -427,7 +427,7 @@ class Migration(migrations.Migration):
                 schema=settings.ELEKTRA_SCHEMA
             ),
             """
-            DROP MATERIALIZED VIEW IF EXISTS public.elektra_medica_board_clearance;
+            DROP MATERIALIZED VIEW IF EXISTS public.elektra_medical_board_clearance;
 
             DROP MATERIALIZED VIEW IF EXISTS public.elektra_rectorate_commitment;
 
