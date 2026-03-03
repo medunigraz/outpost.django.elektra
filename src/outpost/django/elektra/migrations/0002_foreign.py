@@ -4,6 +4,11 @@ from django.db import migrations
 
 from ..conf import settings
 
+"""
+CREATE extension postgres_fdw;
+GRANT USAGE ON FOREIGN DATA WRAPPER postgres_fdw to "{username}";
+"""
+
 
 class Migration(migrations.Migration):
 
