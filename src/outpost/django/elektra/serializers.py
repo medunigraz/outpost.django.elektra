@@ -8,9 +8,31 @@ logger = logging.getLogger(__name__)
 
 
 class ProjectReportSerializer(FlexFieldsModelSerializer):
+    """
+    ## Expansions
+
+    To activate relation expansion add the desired fields as a comma separated
+    list to the `expand` query parameter like this:
+
+        ?expand=<field>,<field>,<field>,...
+
+    The following relational fields can be expanded:
+
+     * `sponsor`
+
+    """
     class Meta:
         model = models.ProjectReport
         fields = "__all__"
+
+    @property
+    def expandable_fields(self):
+        return {
+            "sponsor": (
+                "outpost.django.research.serializers.FunderSerializer",
+                {"source": "sponsor"},
+            )
+        }
 
 
 class ProjectReportTaskSerializer(FlexFieldsModelSerializer):
