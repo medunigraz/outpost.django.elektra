@@ -1,17 +1,21 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from outpost.django.base.decorators import docstring_format
 from outpost.django.base.mixins import CacheResponseMixin
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.viewsets import ReadOnlyModelViewSet
+from rest_framework.filters import OrderingFilter
 
 from . import (
     models,
     serializers,
+    filters,
 )
 
 
 @docstring_format(
     model=models.ProjectReport.__doc__,
     serializer=serializers.ProjectReportSerializer.__doc__,
+    filter=filters.ProjectReportFilter.__doc__,
 )
 class ProjectReportViewSet(CacheResponseMixin, ReadOnlyModelViewSet):
     """
@@ -19,10 +23,14 @@ class ProjectReportViewSet(CacheResponseMixin, ReadOnlyModelViewSet):
 
     {model}
     {serializer}
+    {filter}
     """
 
     queryset = models.ProjectReport.objects.all()
     serializer_class = serializers.ProjectReportSerializer
+    filter_backends = (DjangoFilterBackend, OrderingFilter)
+    filter_class = filters.ProjectReportFilter
+    ordering_fields = ("created",)
     permission_classes = (DjangoModelPermissions,)
 
 

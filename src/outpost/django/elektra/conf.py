@@ -3,7 +3,7 @@ from django.conf import settings
 
 
 class ElektraAppConf(AppConf):
-    SCHEMA = "doxis"
+    SCHEMA = "doxis-dev"
     FDW_HOSTNAME = ""
     FDW_PORT = None
     FDW_DATABASE = ""
