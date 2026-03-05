@@ -139,7 +139,7 @@ class Migration(migrations.Migration):
                 "KLINISCHEPHASE" AS clinical_phase,
                 "STUDIENDESIGN2" AS study_design,
                 lower("MULTINATIONAL") = 'y' AS multi_national,
-                "SPONSORID" AS sponsor,
+                "SPONSORID"::integer AS sponsor_id,
                 regexp_split_to_array("FORSCHUNGSFELDMULTI", '\\s*\\|\\s*') AS research_fields,
                 "BETEILIGUNGSKRITERIUM" AS cooperation_criteria,
                 regexp_split_to_array("STUDIENTYPMULTI", '\\s*\\|\\s*') AS study_types,
