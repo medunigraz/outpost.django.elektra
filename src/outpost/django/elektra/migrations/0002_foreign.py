@@ -11,13 +11,12 @@ GRANT USAGE ON FOREIGN DATA WRAPPER postgres_fdw to "{username}";
 
 
 class Migration(migrations.Migration):
-
     ops = [
         (
             """
-            CREATE SERVER doxis FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host '{hostname}', dbname '{database}', port '{port}');
+            CREATE SERVER IF NOT EXISTS doxis FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host '{hostname}', dbname '{database}', port '{port}');
 
-            CREATE USER MAPPING FOR CURRENT_USER SERVER doxis OPTIONS (user '{username}', password '{password}');
+            CREATE USER MAPPING IF NOT EXISTS FOR CURRENT_USER SERVER doxis OPTIONS (user '{username}', password '{password}');
 
             CREATE SCHEMA elektra;
 
@@ -438,7 +437,7 @@ class Migration(migrations.Migration):
                 database=settings.ELEKTRA_FDW_DATABASE,
                 port=settings.ELEKTRA_FDW_PORT or 5432,
                 username=settings.ELEKTRA_FDW_USERNAME,
-                password=settings.ELEKTRA_FDW_PASSWORD
+                password=settings.ELEKTRA_FDW_PASSWORD,
             ),
             """
             DROP MATERIALIZED VIEW IF EXISTS public.elektra_medical_board_clearance;
