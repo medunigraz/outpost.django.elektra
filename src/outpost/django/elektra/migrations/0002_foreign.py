@@ -4,16 +4,19 @@ from django.db import migrations
 
 from ..conf import settings
 
+"""
+CREATE extension postgres_fdw;
+GRANT USAGE ON FOREIGN DATA WRAPPER postgres_fdw to "{username}";
+CREATE SERVER IF NOT EXISTS doxis FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host '{hostname}', dbname '{database}', port '{port}');
+CREATE USER MAPPING IF NOT EXISTS FOR {db_username} SERVER doxis OPTIONS (user '{username}', password '{password}');
+GRANT USAGE ON FOREIGN SERVER doxis TO {db_username};
+"""
+
 
 class Migration(migrations.Migration):
-
     ops = [
         (
             """
-            CREATE SERVER doxis FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host '{hostname}', dbname '{database}', port '{port}');
-
-            CREATE USER MAPPING FOR CURRENT_USER SERVER doxis OPTIONS (user '{username}', password '{password}');
-
             CREATE SCHEMA elektra;
 
             CREATE FOREIGN TABLE elektra.projektmeldung (
@@ -39,11 +42,11 @@ class Migration(migrations.Migration):
                 "PROJEKTLEITER2NAME_APIID" varchar(50) NULL,
                 "PROJEKTLEITER1ID_APIID" varchar(50) NULL,
                 "PROJEKTSUMMEGEPLANT" float8 NULL,
-                "PROJEKTTITELDE" varchar(100) NULL,
+                "PROJEKTTITELDE" varchar(1024) NULL,
                 "KLINISCHEPHASE" varchar(30) NULL,
                 "STUDIENDESIGN2" bpchar(1) NULL,
                 "MULTINATIONAL" bpchar(1) NULL,
-                "SPONSORNAME" varchar(250) NULL,
+                "SPONSORID" varchar(10) NULL,
                 "CROAPNAME" varchar(250) NULL,
                 "LEAN2" varchar(2) NULL,
                 "LEAN5" varchar(2) NULL,
@@ -277,7 +280,7 @@ class Migration(migrations.Migration):
                 "KLINISCHEPHASE" AS clinical_phase,
                 "STUDIENDESIGN2" AS study_design,
                 lower("MULTINATIONAL") = 'y' AS multi_national,
-                "SPONSORNAME" AS sponsor,
+                "SPONSORID"::integer AS sponsor_id,
                 regexp_split_to_array("FORSCHUNGSFELDMULTI", '\s*\|\s*') AS research_fields,
                 "BETEILIGUNGSKRITERIUM" AS cooperation_criteria,
                 regexp_split_to_array("STUDIENTYPMULTI", '\s*\|\s*') AS study_types,
@@ -428,12 +431,7 @@ class Migration(migrations.Migration):
             FROM elektra.freigabeaedir_aufgaben
             WITH DATA;
             """.format(
-                schema=settings.ELEKTRA_SCHEMA,
-                hostname=settings.ELEKTRA_FDW_HOSTNAME,
-                database=settings.ELEKTRA_FDW_DATABASE,
-                port=settings.ELEKTRA_FDW_PORT or 5432,
-                username=settings.ELEKTRA_FDW_USERNAME,
-                password=settings.ELEKTRA_FDW_PASSWORD
+                schema=settings.ELEKTRA_SCHEMA
             ),
             """
             DROP MATERIALIZED VIEW IF EXISTS public.elektra_medical_board_clearance;

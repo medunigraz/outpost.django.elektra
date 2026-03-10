@@ -73,7 +73,7 @@ class Migration(migrations.Migration):
                 ("workflow_decision_code", models.TextField(null=True)),
             ],
             options={
-                "db_table": "elektra_medica_board_clearance",
+                "db_table": "elektra_medical_board_clearance",
                 "managed": False,
             },
         ),

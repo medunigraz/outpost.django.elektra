@@ -73,7 +73,15 @@ class ProjectReport(models.Model):
     clinical_phase = models.TextField(null=True)
     study_design = models.BooleanField(null=True)
     multi_national = models.BooleanField(null=True)
-    sponsor = models.TextField(null=True)
+    sponsor = models.ForeignKey(
+        "research.Funder",
+        on_delete=models.DO_NOTHING,
+        related_name="+",
+        db_constraint=False,
+        db_index=False,
+        null=True,
+        blank=True,
+    )
     research_fields = ArrayField(models.TextField(null=True))
     cooperation_criteria = models.TextField(null=True)
     study_types = ArrayField(models.TextField(null=True))
