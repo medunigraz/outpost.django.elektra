@@ -8,7 +8,7 @@ from ..conf import settings
 CREATE extension postgres_fdw;
 GRANT USAGE ON FOREIGN DATA WRAPPER postgres_fdw to "{username}";
 CREATE SERVER IF NOT EXISTS doxis FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host '{hostname}', dbname '{database}', port '{port}');
-CREATE USER MAPPING IF NOT EXISTS FOR CURRENT_USER SERVER doxis OPTIONS (user '{username}', password '{password}');
+CREATE USER MAPPING IF NOT EXISTS FOR {db_username} SERVER doxis OPTIONS (user '{username}', password '{password}');
 GRANT USAGE ON FOREIGN SERVER doxis TO {db_username};
 """
 
