@@ -657,3 +657,44 @@ class MedicalBoardClearanceTask(models.Model):
 
     def __str__(self):
         return str(self.uuid)
+
+
+class ProjectImport(models.Model):
+    id = models.PositiveIntegerField(primary_key=True)
+    title = HStoreField()
+    short = models.TextField(null=True)
+    leader = models.ForeignKey(
+        "campusonline.Person",
+        on_delete=models.DO_NOTHING,
+        related_name="+",
+        db_constraint=False,
+        db_index=False,
+        null=True,
+        blank=True,
+    )
+    effective_start = models.DateField(null=True)
+    effective_end = models.DateField(null=True)
+    organization = models.ForeignKey(
+        "campusonline.Organization",
+        on_delete=models.DO_NOTHING,
+        related_name="+",
+        db_constraint=False,
+        db_index=False,
+        null=True,
+        blank=True,
+    )
+    sponsors = ArrayField(models.TextField(null=True))
+    wibi_codes = ArrayField(models.TextField(null=True))
+    research_field_ids = ArrayField(models.PositiveIntegerField(null=True))
+    type = models.TextField(null=True)
+    status = models.TextField(null=True)
+
+    class Meta:
+        managed = False
+        db_table = "elektra_project_import"
+
+    class Refresh:
+        interval = 86400
+
+    def __str__(self):
+        return str(self.id)
