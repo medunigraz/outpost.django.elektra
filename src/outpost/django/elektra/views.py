@@ -1,15 +1,17 @@
 from django.core.cache import cache
 from django.http import HttpResponse
+from outpost.django.api.permissions import ExtendedDjangoModelPermissions
 from rest_framework.views import APIView
-from rest_framework import permissions
 
 from .conf import settings
+from .models import ProjectImport
 from .tasks import ElektraTasks
 
 
 class ProjectImportView(APIView):
 
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [ExtendedDjangoModelPermissions]
+    queryset = ProjectImport.objects.all()
     
     def get(self, request):
         response = HttpResponse()
