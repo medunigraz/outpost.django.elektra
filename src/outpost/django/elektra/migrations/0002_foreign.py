@@ -255,6 +255,26 @@ class Migration(migrations.Migration):
             SERVER doxis
             OPTIONS (schema_name '{schema}', table_name 'ELEKTR.A_VertrPruef_Aufgaben');
 
+            CREATE FOREIGN TABLE elektra.geldgeber (
+                "UUID" varchar, 
+                "VUUID" varchar(52) NULL, 
+                "DOKFOLDERUUID" varchar(100) NULL, 
+                "FOERDERINSTITUTIONCITY" varchar(100) NULL, 
+                "FOERDERINSTITUTIONCOUNTRY" varchar(50) NULL, 
+                "FOERDERINSTITUTIONCOUNTRYCODE" varchar(5) NULL, 
+                "FOERDERINSTITUTIONEINGABE" varchar(250) NULL, 
+                "FOERDERINSTITUTIONHAUPT" bpchar(1) NULL, 
+                "FOERDERINSTITUTION" varchar(250) NULL, 
+                "FOERDERINSTITUTIONSTREET" varchar(100) NULL, 
+                "FOERDERINSTITUTIONZIP" varchar(50) NULL, 
+                "FOERDERPROGRAMMEINGABE" varchar(250) NULL, 
+                "FOERDERPROGRAMM" varchar(100) NULL, 
+                "FOERDERINSTITUTIONIDMULTI" text NULL, 
+                "FRDERPROGRAMMMULTI" text NULL
+            )
+            SERVER "doxis"
+            OPTIONS (schema_name '{schema}', table_name 'ELEKTR.A_IDX_GELDGEBER');
+
             CREATE MATERIALIZED VIEW public.elektra_project_report AS SELECT
                 "PROJEKTNUMMER"::integer AS id,
                 "UUID" AS uuid,
@@ -465,6 +485,8 @@ class Migration(migrations.Migration):
             DROP FOREIGN TABLE elektra.projektmeldungaufgaben;
 
             DROP FOREIGN TABLE elektra.projektmeldung;
+
+            DROP FOREIGN TABLE elektra.geldgeber;
 
             DROP SCHEMA elektra;
 
