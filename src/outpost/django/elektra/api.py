@@ -1,14 +1,14 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from outpost.django.base.decorators import docstring_format
 from outpost.django.base.mixins import CacheResponseMixin
+from rest_framework.filters import OrderingFilter
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.viewsets import ReadOnlyModelViewSet
-from rest_framework.filters import OrderingFilter
 
 from . import (
+    filters,
     models,
     serializers,
-    filters,
 )
 
 

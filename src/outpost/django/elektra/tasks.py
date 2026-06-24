@@ -1,10 +1,18 @@
 import logging
-from celery import shared_task
 from collections.abc import Mapping
-from django.core.cache import cache
-from typing import Final, Optional
+from typing import (
+    Final,
+    Optional,
+)
 
-from lxml.etree import Element, SubElement, _Element, tostring
+from celery import shared_task
+from django.core.cache import cache
+from lxml.etree import (
+    Element,
+    SubElement,
+    _Element,
+    tostring,
+)
 
 from .conf import settings
 
