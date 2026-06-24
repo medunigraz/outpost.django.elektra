@@ -17,7 +17,7 @@ class ProjectImportView(APIView):
     
     def get(self, request):
         response = HttpResponse()
-        response["Content-Type"] = "application/xml"
+        response["Content-Type"] = "text/xml"
         xml = cache.get(settings.ELEKTRA_PROJECT_IMPORT_CACHE_KEY, None)
         if not xml:
             xml = ElektraTasks().generate()
