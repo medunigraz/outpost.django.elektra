@@ -1,5 +1,6 @@
 from django.core.cache import cache
 from django.http import HttpResponse
+from outpost.django.api.authentication import BearerTokenAuthentication
 from outpost.django.api.permissions import ExtendedDjangoModelPermissions
 from rest_framework.views import APIView
 
@@ -10,6 +11,7 @@ from .tasks import ElektraTasks
 
 class ProjectImportView(APIView):
 
+    authentication_classes = [BearerTokenAuthentication]
     permission_classes = [ExtendedDjangoModelPermissions]
     queryset = ProjectImport.objects.all()
     
