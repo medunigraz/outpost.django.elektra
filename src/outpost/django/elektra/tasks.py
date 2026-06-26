@@ -134,22 +134,22 @@ class ElektraTasks:
 
         def append_organization(project, root: _Element, nsmap: Mapping[str, str]) -> None:
             """Append organization and sponsor details to the XML root element."""
-            organizations = SubElement(root, f"{{{nsmap['v1']}}}organizations")
+            organizations = SubElement(root, f"{{{nsmap['v1']}}}organisations")
             SubElement(
                 organizations,
-                f"{{{nsmap['v1']}}}organization",
+                f"{{{nsmap['v1']}}}organisation",
                 id=str(project.organization_id),
             )
 
             external_organizations = SubElement(
                 root,
-                f"{{{nsmap['v1']}}}externalorganizations",
+                f"{{{nsmap['v1']}}}externalOrganisations",
             )
 
             for sponsor in project.sponsors:
                 external_org_assoc = SubElement(
                     external_organizations,
-                    f"{{{nsmap['v3']}}}externalorganizationAssociation",
+                    f"{{{nsmap['v3']}}}externalOrganisationAssociation",
                 )
                 append_text_element(
                     external_org_assoc,
@@ -159,7 +159,7 @@ class ElektraTasks:
 
             SubElement(
                 root,
-                f"{{{nsmap['v1']}}}managedByorganization",
+                f"{{{nsmap['v1']}}}managedByOrganisation",
                 id=str(1),
             )
 
