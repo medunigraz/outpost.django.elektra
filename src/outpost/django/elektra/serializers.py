@@ -21,6 +21,7 @@ class ProjectReportSerializer(FlexFieldsModelSerializer):
      * `sponsor`
 
     """
+
     class Meta:
         model = models.ProjectReport
         fields = "__all__"
