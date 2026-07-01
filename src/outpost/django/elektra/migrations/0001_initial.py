@@ -800,4 +800,312 @@ class Migration(migrations.Migration):
                 ),
             ],
         ),
+        migrations.SeparateDatabaseAndState(
+            database_operations=[
+                migrations.RunSQL(
+                    sql="""
+                        CREATE FOREIGN TABLE elektra.geldgeber (
+                            "UUID" varchar,
+                            "VUUID" varchar(52) NULL,
+                            "DOKFOLDERUUID" varchar(100) NULL,
+                            "FOERDERINSTITUTIONCITY" varchar(100) NULL,
+                            "FOERDERINSTITUTIONCOUNTRY" varchar(50) NULL,
+                            "FOERDERINSTITUTIONCOUNTRYCODE" varchar(5) NULL,
+                            "FOERDERINSTITUTIONEINGABE" varchar(250) NULL,
+                            "FOERDERINSTITUTIONHAUPT" bpchar(1) NULL,
+                            "FOERDERINSTITUTION" varchar(250) NULL,
+                            "FOERDERINSTITUTIONSTREET" varchar(100) NULL,
+                            "FOERDERINSTITUTIONZIP" varchar(50) NULL,
+                            "FOERDERPROGRAMMEINGABE" varchar(250) NULL,
+                            "FOERDERPROGRAMM" varchar(100) NULL,
+                            "FOERDERINSTITUTIONIDMULTI" text NULL,
+                            "FRDERPROGRAMMMULTI" text NULL
+                        )
+                        SERVER "doxis"
+                        OPTIONS (schema_name '{schema}', table_name 'ELEKTR.A_IDX_GELDGEBER');
+                    """,
+                    reverse_sql="""
+                        DROP FOREIGN TABLE elektra.geldgeber
+                    """,
+                ),
+                migrations.RunSQL(
+                    sql="""
+                        CREATE MATERIALIZED VIEW public.elektra_project_import
+                        TABLESPACE pg_default
+                        AS WITH geldgeber_agg AS (
+                                SELECT geldgeber."DOKFOLDERUUID"::uuid AS "DOKFOLDERUUID",
+                                    array_remove(array_agg(DISTINCT geldgeber."FOERDERINSTITUTIONEINGABE"), NULL::character varying) AS "FOERDERINSTITUTIONEINGABE"
+                                FROM elektra.geldgeber
+                                GROUP BY (geldgeber."DOKFOLDERUUID"::uuid)
+                                )
+                        SELECT p."PROJEKTNUMMER"::integer AS "id",
+                            hstore(ARRAY['de'::text], ARRAY[p."PROJEKTTITELDE"]::text[]) AS title,
+                            p."KURZBEZEICHNUNG" as "short",
+                            p."PROJEKTLEITER1ID_APIID"::integer AS "leader_id",
+                            to_date(p."PROJEKTBEGINNEFFEKTIV"::text, 'YYYYMMDD'::text) AS effective_start,
+                            to_date(p."PROJEKTENDEEFFEKTIV"::text, 'YYYYMMDD'::text) AS effective_end,
+                            p."PROJEKTVERANTWORTLICHEEINHEIT_APIID"::integer AS organization_id,
+                            g."FOERDERINSTITUTIONEINGABE" as "sponsors",
+                            array_remove(ARRAY[
+                                CASE
+                                    WHEN p."WIBI_101" IS NOT NULL THEN 'WIBI_101'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_102" IS NOT NULL THEN 'WIBI_102'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_103" IS NOT NULL THEN 'WIBI_103'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_104" IS NOT NULL THEN 'WIBI_104'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_105" IS NOT NULL THEN 'WIBI_105'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_106" IS NOT NULL THEN 'WIBI_106'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_107" IS NOT NULL THEN 'WIBI_107'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_201" IS NOT NULL THEN 'WIBI_201'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_202" IS NOT NULL THEN 'WIBI_202'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_203" IS NOT NULL THEN 'WIBI_203'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_204" IS NOT NULL THEN 'WIBI_204'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_205" IS NOT NULL THEN 'WIBI_205'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_206" IS NOT NULL THEN 'WIBI_206'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_207" IS NOT NULL THEN 'WIBI_207'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_208" IS NOT NULL THEN 'WIBI_208'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_209" IS NOT NULL THEN 'WIBI_209'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_210" IS NOT NULL THEN 'WIBI_210'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_211" IS NOT NULL THEN 'WIBI_211'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_301" IS NOT NULL THEN 'WIBI_301'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_302" IS NOT NULL THEN 'WIBI_302'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_303" IS NOT NULL THEN 'WIBI_303'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_304" IS NOT NULL THEN 'WIBI_304'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_305" IS NOT NULL THEN 'WIBI_305'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_401" IS NOT NULL THEN 'WIBI_401'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_402" IS NOT NULL THEN 'WIBI_402'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_403" IS NOT NULL THEN 'WIBI_403'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_404" IS NOT NULL THEN 'WIBI_404'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_405" IS NOT NULL THEN 'WIBI_405'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_501" IS NOT NULL THEN 'WIBI_501'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_502" IS NOT NULL THEN 'WIBI_502'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_503" IS NOT NULL THEN 'WIBI_503'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_504" IS NOT NULL THEN 'WIBI_504'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_505" IS NOT NULL THEN 'WIBI_505'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_506" IS NOT NULL THEN 'WIBI_506'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_507" IS NOT NULL THEN 'WIBI_507'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_508" IS NOT NULL THEN 'WIBI_508'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_509" IS NOT NULL THEN 'WIBI_509'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_601" IS NOT NULL THEN 'WIBI_601'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_602" IS NOT NULL THEN 'WIBI_602'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_603" IS NOT NULL THEN 'WIBI_603'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_604" IS NOT NULL THEN 'WIBI_604'::text
+                                    ELSE NULL::text
+                                END,
+                                CASE
+                                    WHEN p."WIBI_605" IS NOT NULL THEN 'WIBI_605'::text
+                                    ELSE NULL::text
+                                END], NULL::text) AS "wibi_codes",
+                            regexp_split_to_array(p."FORSCHUNGSFELDMULTI", '\s*\|\s*'::text)::integer[] AS "research_field_ids",
+                            p."PROJEKTTYP" as "type",
+                            p."PROJEKTSTATUS" as "status"
+                        FROM elektra.projektmeldung p
+                            JOIN geldgeber_agg g ON g."DOKFOLDERUUID" = p."UUID"::uuid
+                        WITH DATA
+                    """,
+                    reverse_sql="""
+                        DROP MATERIALIZED VIEW IF EXISTS public.elektra_project_import
+                    """,
+                ),
+                migrations.RunSQL(
+                    sql="""
+                        CREATE INDEX elektra_project_import_type_idx ON public.elektra_project_import USING btree ("type")
+                    """,
+                    reverse_sql="""
+                        DROP INDEX elektra_project_import_type_idx
+                    """,
+                ),
+                migrations.RunSQL(
+                    sql="""
+                        CREATE INDEX elektra_project_import_status_idx ON public.elektra_project_import USING btree ("status");
+                    """,
+                    reverse_sql="""
+                        DROP INDEX elektra_project_import_status_idx
+                    """,
+                ),
+            ],
+            state_operations=[
+                migrations.CreateModel(
+                    name="ProjectImport",
+                    fields=[
+                        (
+                            "id",
+                            models.PositiveIntegerField(primary_key=True, serialize=False),
+                        ),
+                        ("title", HStoreField()),
+                        ("short", models.TextField(null=True)),
+                        (
+                            "leader",
+                            models.ForeignKey(
+                                blank=True,
+                                db_constraint=False,
+                                db_index=False,
+                                null=True,
+                                on_delete=django.db.models.deletion.DO_NOTHING,
+                                related_name="+",
+                                to="campusonline.Person",
+                            ),
+                        ),
+                        ("effective_start", models.DateField(null=True)),
+                        ("effective_end", models.DateField(null=True)),
+                        (
+                            "organization",
+                            models.ForeignKey(
+                                blank=True,
+                                db_constraint=False,
+                                db_index=False,
+                                null=True,
+                                on_delete=django.db.models.deletion.DO_NOTHING,
+                                related_name="+",
+                                to="campusonline.Organization",
+                            ),
+                        ),
+                        (
+                            "sponsors",
+                            ArrayField(
+                                base_field=models.TextField(null=True), default=list
+                            ),
+                        ),
+                        (
+                            "wibi_codes",
+                            ArrayField(
+                                base_field=models.TextField(null=True), default=list
+                            ),
+                        ),
+                        (
+                            "research_field_ids",
+                            ArrayField(
+                                base_field=models.PositiveIntegerField(null=True),
+                                default=list,
+                            ),
+                        ),
+                        ("type", models.TextField(null=True)),
+                        ("status", models.TextField(null=True)),
+                    ],
+                    options={
+                        "db_table": "elektra_project_import",
+                        "managed": False,
+                    },
+                ),
+            ],
+        ),
     ]

@@ -9,6 +9,7 @@ class ElektraAppConf(AppConf):
     FDW_DATABASE = ""
     FDW_USERNAME = ""
     FDW_PASSWORD = ""
+    PROJECT_IMPORT_CACHE_KEY = "pure"
 
     class Meta:
         prefix = "ELEKTRA"
