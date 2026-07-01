@@ -1049,7 +1049,9 @@ class Migration(migrations.Migration):
                     fields=[
                         (
                             "id",
-                            models.PositiveIntegerField(primary_key=True, serialize=False),
+                            models.PositiveIntegerField(
+                                primary_key=True, serialize=False
+                            ),
                         ),
                         ("title", HStoreField()),
                         ("short", models.TextField(null=True)),

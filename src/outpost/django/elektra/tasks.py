@@ -42,8 +42,7 @@ class ElektraTasks:
         from . import models
 
         projects = models.ProjectImport.objects.filter(
-            type="10",
-            status="Projekt zur Umsetzung freigegeben"
+            type="10", status="Projekt zur Umsetzung freigegeben"
         )
 
         nsmap = dict(NSMAP)
@@ -89,7 +88,7 @@ class ElektraTasks:
             visibility_element.text = "Public"
 
             return root
-        
+
         def get_logical_names(project) -> list[str]:
             """Return keyword group names that apply to this project."""
             groups: list[str] = []
@@ -116,11 +115,11 @@ class ElektraTasks:
                 participant, f"{{{nsmap['v1']}}}internalParticipant"
             )
             append_text_element(
-                internal_participant, f"{{{nsmap['v1']}}}personId", str(project.leader_id)
+                internal_participant,
+                f"{{{nsmap['v1']}}}personId",
+                str(project.leader_id),
             )
-            append_text_element(
-                internal_participant, f"{{{nsmap['v1']}}}role", "pi"
-            )
+            append_text_element(internal_participant, f"{{{nsmap['v1']}}}role", "pi")
             append_text_element(
                 internal_participant,
                 f"{{{nsmap['v1']}}}associationStartDate",
@@ -132,7 +131,9 @@ class ElektraTasks:
                 project.effective_end.strftime("%Y-%m-%d"),
             )
 
-        def append_organization(project, root: _Element, nsmap: Mapping[str, str]) -> None:
+        def append_organization(
+            project, root: _Element, nsmap: Mapping[str, str]
+        ) -> None:
             """Append organization and sponsor details to the XML root element."""
             organizations = SubElement(root, f"{{{nsmap['v1']}}}organisations")
             SubElement(
@@ -201,7 +202,9 @@ class ElektraTasks:
         for project in projects:
             root.append(to_xml(project, nsmap, root))
 
-        body = tostring(root, xml_declaration=True, encoding="UTF-8", pretty_print=True).decode()
+        body = tostring(
+            root, xml_declaration=True, encoding="UTF-8", pretty_print=True
+        ).decode()
         cache.set(settings.ELEKTRA_PROJECT_IMPORT_CACHE_KEY, body)
         logger.info(f"Finished generating new XML body with size {len(body)}")
 

@@ -16,7 +16,7 @@ class ProjectImportView(APIView):
     permission_classes = [ExtendedDjangoModelPermissions]
     queryset = ProjectImport.objects.all()
     renderer_classes = [XMLRenderer]
-    
+
     def get(self, request):
         response = HttpResponse()
         response["Content-Type"] = "application/xml"
