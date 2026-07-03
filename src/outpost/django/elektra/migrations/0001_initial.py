@@ -1053,7 +1053,7 @@ class Migration(migrations.Migration):
                                 primary_key=True, serialize=False
                             ),
                         ),
-                        ("title", HStoreField()),
+                        ("title", django.contrib.postgres.fields.hstore.HStoreField()),
                         ("short", models.TextField(null=True)),
                         (
                             "leader",
@@ -1083,19 +1083,19 @@ class Migration(migrations.Migration):
                         ),
                         (
                             "sponsors",
-                            ArrayField(
+                            django.contrib.postgres.fields.ArrayField(
                                 base_field=models.TextField(null=True), default=list
                             ),
                         ),
                         (
                             "wibi_codes",
-                            ArrayField(
+                            django.contrib.postgres.fields.ArrayField(
                                 base_field=models.TextField(null=True), default=list
                             ),
                         ),
                         (
                             "research_field_ids",
-                            ArrayField(
+                            django.contrib.postgres.fields.ArrayField(
                                 base_field=models.PositiveIntegerField(null=True),
                                 default=list,
                             ),
