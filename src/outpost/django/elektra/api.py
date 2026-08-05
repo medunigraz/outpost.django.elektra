@@ -29,7 +29,7 @@ class ProjectReportViewSet(CacheResponseMixin, ReadOnlyModelViewSet):
     queryset = models.ProjectReport.objects.all()
     serializer_class = serializers.ProjectReportSerializer
     filter_backends = (DjangoFilterBackend, OrderingFilter)
-    filter_class = filters.ProjectReportFilter
+    filterset_class = filters.ProjectReportFilter
     ordering_fields = ("created",)
     permission_classes = (DjangoModelPermissions,)
 
