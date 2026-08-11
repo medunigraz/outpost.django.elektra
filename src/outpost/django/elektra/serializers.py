@@ -28,12 +28,7 @@ class ProjectReportSerializer(FlexFieldsModelSerializer):
 
     @property
     def expandable_fields(self):
-        return {
-            "sponsor": (
-                "outpost.django.research.serializers.FunderSerializer",
-                {"source": "sponsor"},
-            )
-        }
+        return {"sponsor": ("outpost.django.research.serializers.FunderSerializer",)}
 
 
 class ProjectReportTaskSerializer(FlexFieldsModelSerializer):
