@@ -686,6 +686,7 @@ class ProjectImport(models.Model):
     sponsors = ArrayField(models.TextField(null=True))
     wibi_codes = ArrayField(models.TextField(null=True))
     research_field_ids = ArrayField(models.PositiveIntegerField(null=True))
+    program = ArrayField(models.TextField(null=True))
     type = models.TextField(null=True)
     status = models.TextField(null=True)
 

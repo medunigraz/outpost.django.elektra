@@ -96,6 +96,8 @@ class ElektraTasks:
                 groups.append("/dk/atira/pure/keywords/wibi")
             if project.research_field_ids:
                 groups.append("/dk/atira/pure/keywords/researchfields")
+            if project.program:
+                groups.append("program")
             return groups
 
         def append_text_element(
@@ -197,6 +199,31 @@ class ElektraTasks:
                                 researchfield, "none"
                             ),
                         )
+
+                if logical_name == "program":
+                    structured_keyword = SubElement(
+                        structured_keywords, f"{{{nsmap['v3']}}}structuredKeyword"
+                    )
+                    free_keywords = SubElement(
+                        structured_keyword, f"{{{nsmap['v3']}}}freeKeywords"
+                    )
+                    free_keyword = SubElement(
+                        free_keywords, f"{{{nsmap['v3']}}}freeKeyword"
+                    )
+                    append_text_element(
+                        free_keyword,
+                        f"{{{nsmap['v3']}}}text",
+                        project.program[0],
+                        lang="en",
+                        country="GB",
+                    )
+                    append_text_element(
+                        free_keyword,
+                        f"{{{nsmap['v3']}}}text",
+                        project.program[0],
+                        lang="de",
+                        country="AT",
+                    )
 
         logger.info("Generating new XML body")
         for project in projects:
