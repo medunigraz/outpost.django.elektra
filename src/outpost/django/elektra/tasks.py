@@ -42,7 +42,10 @@ class ElektraTasks:
         from . import models
 
         projects = models.ProjectImport.objects.filter(
-            type="10", status="Projekt zur Umsetzung freigegeben"
+            type="10",
+            status="Projekt zur Umsetzung freigegeben",
+            effective_start__isnull=False,
+            effective_end__is_null=False,
         )
 
         nsmap = dict(NSMAP)
